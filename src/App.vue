@@ -1,22 +1,25 @@
 <script>
 import axios from 'axios';
+import ProjectCard from './components/ProjectCard.vue';
 
 export default {
-  data() {
-    return {
-      projects: []
-    }
-  },
-  mounted() {
-    this.getProjects();
-  },
-  methods: {
-    getProjects() {
-      axios.get('http://localhost:8000/api/projects').then(resp => {
-        this.projects = resp.data.result;
-      })
-    }
-  }
+    data() {
+        return {
+            baseUrl: "http://localhost:8000",
+            projects: []
+        };
+    },
+    mounted() {
+        this.getProjects();
+    },
+    methods: {
+        getProjects() {
+            axios.get(`${this.baseUrl}/api/projects`).then(resp => {
+                this.projects = resp.data.result;
+            });
+        }
+    },
+    components: { ProjectCard }
 }
 </script>
 
@@ -26,16 +29,7 @@ export default {
     <h2>Lista dei progetti</h2>
     <div class="row row-cols-3 g-3">
       <div class="col " v-for="project in projects" :key="project.id">
-        <div class="card h-100">
-        <img v-if="project.image" :src="`http://localhost:8000/storage/${project.image}`" class="card-img-top" :alt="project.title">
-        <div v-else>
-          Nessuna immagine presente
-        </div>
-          <div class="card-body">
-            <h5>{{ project.title }}</h5>
-          </div>
-        </div>
-
+        <ProjectCard :project="project"/>
       </div>
     </div>
   </div>
