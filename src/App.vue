@@ -1,38 +1,15 @@
 <script>
-import axios from 'axios';
-import ProjectCard from './components/ProjectCard.vue';
+import AppHeader from './components/AppHeader.vue';
 
 export default {
-    data() {
-        return {
-            baseUrl: "http://localhost:8000",
-            projects: []
-        };
-    },
-    mounted() {
-        this.getProjects();
-    },
-    methods: {
-        getProjects() {
-            axios.get(`${this.baseUrl}/api/projects`).then(resp => {
-                this.projects = resp.data.result;
-            });
-        }
-    },
-    components: { ProjectCard }
+    components: { AppHeader }
 }
 </script>
 
-
 <template>
-  <div class="container">
-    <h2>Lista dei progetti</h2>
-    <div class="row row-cols-3 g-3">
-      <div class="col " v-for="project in projects" :key="project.id">
-        <ProjectCard :project="project"/>
-      </div>
-    </div>
-  </div>
+  <AppHeader />
+
+  <router-view></router-view>
 </template>
 
 <style lang="scss">
