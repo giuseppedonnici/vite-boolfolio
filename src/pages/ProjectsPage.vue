@@ -1,13 +1,13 @@
 <script>
 import axios from "axios";
 import ProjectCard from "../components/ProjectCard.vue";
+import {store} from "../store";
 
 export default {
   name: "ProjectsPage",
   data() {
     return {
-      baseUrl: "http://localhost:8000",
-      projects: [],
+      projects: []
     };
   },
   mounted() {
@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     getProjects() {
-      axios.get(`${this.baseUrl}/api/projects`).then((resp) => {
+      axios.get(`${store.apiBaseUrl}/api/projects`).then((resp) => {
         this.projects = resp.data.result;
       });
     },
