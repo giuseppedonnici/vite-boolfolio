@@ -23,6 +23,16 @@ export default {
         } else {
           return this.project.description
         }
+      },
+      imgSrc() {
+        // se il progetto inizia con https:// ritorna project.image
+        // altrimenti ritorna ${store.apiBaseUrl}/storage/${project.image}
+        if(!this.project.image) return "";
+        if(this.project.image.startsWith('htpps://')) {
+          return this.project.image;
+        } else {
+          return `${this.store.apiBaseUrl}/storage/${this.project.image}`;
+        }
       }
     }
 }
@@ -30,7 +40,7 @@ export default {
 
 <template>
     <div class="card h-100">
-        <img v-if="project.image" :src="`${store.apiBaseUrl}/storage/${project.image}`" class="card-img-top" :alt="project.title">
+        <img v-if="project.image" :src="imgSrc" class="card-img-top" :alt="project.title">
         <div v-else>
           Nessuna immagine presente
         </div>
